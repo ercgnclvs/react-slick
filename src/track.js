@@ -8,6 +8,19 @@ import {
   getPreClones
 } from "./utils/innerSliderUtils";
 
+// sync current slide with visible slides
+var isCurrentSlide = (index, spec) => {
+  const { linkedSlidesToShow } = spec;
+  const offset = new Array(linkedSlidesToShow);
+  let ctr = Math.floor(linkedSlidesToShow / 2) * -1;
+
+  for (let i = 0; i < offset.length; i++) {
+    offset[i] = spec.currentSlide + ctr;
+    ctr += 1;
+  }
+
+  return offset.includes(index);
+};
 // given specifications/props for a slide, fetch all the classes that need to be applied to the slide
 var getSlideClasses = spec => {
   var slickActive, slickCenter, slickCloned;
@@ -22,6 +35,7 @@ var getSlideClasses = spec => {
   if (spec.centerMode) {
     centerOffset = Math.floor(spec.slidesToShow / 2);
     slickCenter = (index - spec.currentSlide) % spec.slideCount === 0;
+
     if (
       index > spec.currentSlide - centerOffset - 1 &&
       index <= spec.currentSlide + centerOffset
@@ -33,7 +47,9 @@ var getSlideClasses = spec => {
       spec.currentSlide <= index &&
       index < spec.currentSlide + spec.slidesToShow;
   }
-  let slickCurrent = index === spec.currentSlide;
+
+  let slickCurrent = isCurrentSlide(index, spec);
+
   return {
     "slick-slide": true,
     "slick-active": slickActive,

@@ -114,3 +114,15 @@ h3 {
   border-radius: 5px;
   min-height: 45px
 }
+
+.slick-slide {
+  box-sizing: border-box;
+}
+
+.slick-current {
+  background: red;
+}
+
+.slick-center {
+  border: 3px solid blue;
+}

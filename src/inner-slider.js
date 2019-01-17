@@ -621,7 +621,10 @@ export class InnerSlider extends React.Component {
       onMouseEnter: pauseOnHover ? this.onTrackOver : null,
       onMouseLeave: pauseOnHover ? this.onTrackLeave : null,
       onMouseOver: pauseOnHover ? this.onTrackOver : null,
-      focusOnSelect: this.props.focusOnSelect ? this.selectHandler : null
+      focusOnSelect: this.props.focusOnSelect ? this.selectHandler : null,
+      linkedSlidesToShow: this.props.asNavFor
+        ? this.props.asNavFor.innerSlider.props.slidesToShow
+        : null
     };
 
     var dots;
@@ -719,6 +722,7 @@ export class InnerSlider extends React.Component {
       listProps = { className: "slick-list" };
       innerSliderProps = { className };
     }
+
     return (
       <div {...innerSliderProps}>
         {!this.props.unslick ? prevArrow : ""}
