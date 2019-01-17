@@ -24,8 +24,14 @@ export default class AsNavFor extends Component {
         <h4>First Slider</h4>
         <Slider
           asNavFor={this.state.nav2}
+          slidesToShow={3}
+          centerMode
+          beforeChange={(current, next) => console.log(current, next)}
           ref={slider => (this.slider1 = slider)}
         >
+          <div>
+            <h3>0</h3>
+          </div>
           <div>
             <h3>1</h3>
           </div>
@@ -40,19 +46,20 @@ export default class AsNavFor extends Component {
           </div>
           <div>
             <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
           </div>
         </Slider>
         <h4>Second Slider</h4>
         <Slider
           asNavFor={this.state.nav1}
           ref={slider => (this.slider2 = slider)}
-          slidesToShow={3}
+          slidesToShow={5}
           swipeToSlide={true}
+          centerMode
           focusOnSelect={true}
         >
+          <div>
+            <h3>0</h3>
+          </div>
           <div>
             <h3>1</h3>
           </div>
@@ -67,9 +74,6 @@ export default class AsNavFor extends Component {
           </div>
           <div>
             <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
           </div>
         </Slider>
       </div>
