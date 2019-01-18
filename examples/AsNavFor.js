@@ -23,7 +23,7 @@ export default class AsNavFor extends Component {
         <h2>Slider Syncing (AsNavFor)</h2>
         <h4>First Slider</h4>
         <Slider
-          // asNavFor={this.state.nav2}
+          asNavFor={this.state.nav2}
           slidesToShow={3}
           centerPadding={0}
           centerMode
@@ -49,7 +49,7 @@ export default class AsNavFor extends Component {
           </div>
         </Slider>
         <h4>Second Slider</h4>
-        {/* <Slider
+        <Slider
           asNavFor={this.state.nav1}
           ref={slider => (this.slider2 = slider)}
           slidesToShow={5}
@@ -77,7 +77,7 @@ export default class AsNavFor extends Component {
           <div>
             <h3>5</h3>
           </div>
-        </Slider> */}
+        </Slider>
       </div>
     );
   }

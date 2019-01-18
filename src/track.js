@@ -7,20 +7,57 @@ import {
   lazyEndIndex,
   getPreClones
 } from "./utils/innerSliderUtils";
+import { deprecate } from "util";
+
+var mod = (n, m) => {
+  return ((n % m) + m) % m;
+};
 
 // sync current slide with visible slides
-var isCurrentSlide = (index, spec) => {
-  const { linkedSlidesToShow } = spec;
-  const offset = new Array(linkedSlidesToShow);
-  let ctr = Math.floor(linkedSlidesToShow / 2) * -1;
+var isCurrentSlide = spec => {
+  // const linkedSlidesToShow = spec.linkedSlidesToShow || 1;
 
-  for (let i = 0; i < offset.length; i++) {
-    offset[i] = spec.currentSlide + ctr;
-    ctr += 1;
+  // let offset = new Array(linkedSlidesToShow);
+  // let ctr = Math.floor(linkedSlidesToShow / 2) * -1;
+
+  // for (let i = 0; i < linkedSlidesToShow; i++) {
+  //   offset[i] = spec.currentSlide + ctr;
+  //   ctr += 1;
+  // }
+
+  // let offset2 = new Array(linkedSlidesToShow);
+  // for (let j = 0; j < linkedSlidesToShow; j++) {
+  //   offset2[j] = offset[j] - spec.slideCount;
+  // }
+
+  // return [...offset, ...offset2].includes(spec.index);
+
+  const offset = [];
+  const max = Math.floor(spec.linkedSlidesToShow / 2);
+  const min = max * -1;
+
+  for (let i = min; i <= max; i++) {
+    offset.push(i);
   }
 
-  return offset.includes(index);
+  if (mod(spec.index, 6) === spec.slideCount - 1) {
+    console.log(spec.index);
+  }
+
+  if (spec.index === -5) {
+    console.log("****");
+    console.log(spec.slideCount - 1);
+    console.log(spec.index);
+    console.log(mod(-5, 6), mod(5, 6));
+    console.log("****");
+  }
+
+  offset.push(5);
+  offset.push(-5);
+
+  return offset.includes((spec.index - spec.currentSlide) % spec.slideCount);
 };
+
 // given specifications/props for a slide, fetch all the classes that need to be applied to the slide
 var getSlideClasses = spec => {
   var slickActive, slickCenter, slickCloned;
@@ -48,7 +85,7 @@ var getSlideClasses = spec => {
       index < spec.currentSlide + spec.slidesToShow;
   }
 
-  let slickCurrent = isCurrentSlide(index, spec);
+  let slickCurrent = isCurrentSlide(spec);
 
   return {
     "slick-slide": true,
